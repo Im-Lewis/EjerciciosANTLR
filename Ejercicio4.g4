@@ -1,13 +1,20 @@
 grammar Blancos;
-r : (PALABRAS|RESTO)+;
+r : (PALABRAS|RESTO|LINEA_VACIA)+;
 
-S : [\n\t\r|' '] -> skip;
+LINEA_VACIA : SALTOS ([' ']* | [SALTOS]+) SALTOS* {
+    System.out.println();
+};
 
 PALABRAS : [a-zA-Z]+ {
-    System.out.print(getText()+" ");
+    System.out.print(getText());
 };
 
 RESTO : .{
     System.out.print(getText());
 };
+
+CADENA_ESPACIOS : [' ']+ -> skip;
+
+SALTOS : '\r' '\n' | '\n';
+
 
